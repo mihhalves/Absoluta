@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if update %}
+<div class="row ml-3 mt-4">
+    <div class="col-sm-2">
+        <form action="/role/update/{{ role.id }}" method="POST">
+            <div class="form-group">
+                <label for="roleLabel">Cargo</label>
+                <input type="text" class="form-control" id="role" name="role" value="{{ role.name }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+</div>
+{% else %}
+<div class="row ml-3 mt-4">
+    <div class="col-sm-2">
+        <form action="/role" method="POST">
+            <div class="form-group">
+                <label for="roleLabel">Cargo</label>
+                <input type="text" class="form-control" id="role" name="role">
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+{% if message %}
+    {% if message['success'] %}
+        <div class="alert alert-success alert-dismissible ml-3 mt-3 col-sm-2" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Ok!</strong> {{ message['content'] | safe }}
+        </div>
+    {% else %}
+        <div class="alert alert-danger alert-dismissible ml-3 mt-3 col-sm-2" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Falha!</strong> {{ message['content'] | safe }}
+        </div>
+    {% endif %}
+{% endif %}
+{% if roles %}
+<div class="row ml-3 mt-4">
+    <div class="col-sm-3">
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" style="width:10%">#</th>
+                <th scope="col" style="width:60%">Cargo</th>
+                <th scope="col" style="width:30%">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for role in roles %}
+                <tr>
+                    <td>{{ role['id'] }}</td>
+                    <td>{{ role['name'] }}</td>
+                    <td>
+                        <a href="/role/update/{{ role['id'] }}" class="btn btn-outline-primary"><i class="far fa-edit ml-1 mr-1"></i></a>
+                        <a href="/role/delete/{{ role['id'] }}" class="btn btn-outline-danger"><i class="far fa-trash-alt ml-1 mr-1"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+<!-- 
+<div class="row ml-3 mt-4">
+    <div class="col-sm-3">
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" style="width:5%">#</th>
+                <th scope="col" style="width:45%">Cargo</th>
+                <th scope="col" style="width:60%">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</th>
+                <td>Mark</td>
+                <td>
+                    <a href="/role/update/7" class="btn btn-outline-primary"><i class="far fa-edit ml-1 mr-1"></i>Editar</a>
+                    <a href="/role/delete/7" class="btn btn-outline-danger"><i class="far fa-trash-alt ml-1 mr-1"></i>Remover</a>
+                </td>
+            </tr>
+            <tr>
+                <td>2</th>
+                <td>Jacob</td>
+                <td>
+                    <a href="/role/update/7" class="btn btn-outline-primary"><i class="far fa-edit ml-1 mr-1"></i>Editar</a>
+                    <a href="/role/delete/7" class="btn btn-outline-danger"><i class="far fa-trash-alt ml-1 mr-1"></i>Remover</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> -->
+
+{% endblock %}
